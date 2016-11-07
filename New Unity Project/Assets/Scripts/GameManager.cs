@@ -4,11 +4,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance = null;
+	private int m_player_option;
+	private bool listening_movement;
+
+	[Header("Prefabs.")]
     public GameObject m_timer_prefab;
     public GameObject m_option_wheel_prefab;
-    private int m_player_option;
-    private bool listening_movement;
-
+    
     // Singleton.
     void Awake()
     {
@@ -22,14 +24,28 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //init
+		ObjectPoolingManager.Instance.CreatePool (m_timer_prefab,1,1);
+		ObjectPoolingManager.Instance.CreatePool (m_option_wheel_prefab,2,2);
+
         listening_movement = false;
         InputPhase();
     }
     void InputPhase()
-    {
-        Instantiate(m_timer_prefab, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 90));
-        Instantiate(m_option_wheel_prefab, new Vector3(-9, 5, 0), Quaternion.identity);
-        Instantiate(m_option_wheel_prefab, new Vector3(9, 5, 0), Quaternion.identity);
+	{	GameObject tim = ObjectPoolingManager.Instance.GetObject (m_timer_prefab.name);
+		tim.transform.position = new Vector3(0,4,0);
+		tim.transform.rotation = Quaternion.Euler (0,0,90);
+
+		GameObject left_panel = ObjectPoolingManager.Instance.GetObject (m_option_wheel_prefab.name);
+		left_panel.transform.position = new Vector3(-9,5,0);
+		left_panel.transform.rotation = Quaternion.identity;
+
+		GameObject right_panel = ObjectPoolingManager.Instance.GetObject (m_option_wheel_prefab.name);
+		right_panel.transform.position = new Vector3(9,5,0);
+		right_panel.transform.rotation = Quaternion.identity;
+
+//        Instantiate(m_timer_prefab, new Vector3(0, 4, 0), Quaternion.Euler(0, 0, 90));
+//        Instantiate(m_option_wheel_prefab, new Vector3(-9, 5, 0), Quaternion.identity);
+//        Instantiate(m_option_wheel_prefab, new Vector3(9, 5, 0), Quaternion.identity);
         listening_movement = true;
     }
 

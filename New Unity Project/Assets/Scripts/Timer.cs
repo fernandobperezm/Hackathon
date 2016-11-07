@@ -33,8 +33,8 @@ public class Timer : MonoBehaviour {
         yield return new WaitForSeconds(seconds);
         activeCountDown = false;
         
-        GameManager.Instance.EventsPhase();
-        Destroy(gameObject);
+        //GameManager.Instance.EventsPhase();
+		gameObject.SetActive (false);
     }
 
 }

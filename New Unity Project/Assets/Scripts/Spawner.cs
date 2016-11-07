@@ -25,7 +25,7 @@ public class Spawner : MonoBehaviour {
         for (int i = 0; i < no_items; i++)
         {
             Vector3 p = new Vector3(x + Random.Range(-5f, 5f), y + Random.Range(-1f, 1f), 0);
-            Instantiate(m_spawned_object, p, Quaternion.identity);
+            Instantiate(m_spawned_object, p, Quaternion.identity); // Change to pooling manager.
             yield return new WaitForSeconds(Random.Range(0f, 0.2f));
 
             yield return null; // This line avoids Crashes of the Coroutine and therefore, Unity crashes :D
